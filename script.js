@@ -17,6 +17,9 @@ document.addEventListener('DOMContentLoaded', function () {
     const timezoneList = document.getElementById('timezone-list');
     const convertButton = document.getElementById('convert-button');
     const copyAllButton = document.getElementById('copy-all-button');
+    const resetButton = document.getElementById('reset-button');
+    const loading = document.getElementById('loading');
+    const timeFormatSelect = document.getElementById('time-format');
 
     // Populate timezone dropdown
     timezones.forEach(timezone => {
@@ -29,20 +32,28 @@ document.addEventListener('DOMContentLoaded', function () {
     convertButton.addEventListener('click', function () {
         const inputTime = document.getElementById('input-time').value;
         const inputTimezone = timezoneSelect.value;
+        const timeFormat = timeFormatSelect.value;
 
         if (!inputTime || !inputTimezone) {
             alert('Please enter both time and timezone.');
             return;
         }
 
+        // Show loading spinner
+        loading.style.display = 'block';
         timezoneList.innerHTML = '';
 
         timezones.forEach(timezone => {
             const convertedTime = new Date(new Date(inputTime).toLocaleString("en-US", { timeZone: timezone.value }));
+            const options = { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: timeFormat === 'en-US' };
+            const formattedTime = convertedTime.toLocaleString(timeFormat, options);
             const listItem = document.createElement('li');
-            listItem.innerHTML = `${timezone.name}: ${convertedTime.toLocaleString()} <button class="copy-button"><i class="fas fa-copy"></i> Copy</button>`;
+            listItem.innerHTML = `${timezone.name}: ${formattedTime} <button class="copy-button"><i class="fas fa-copy"></i> Copy</button>`;
             timezoneList.appendChild(listItem);
         });
+
+        // Hide loading spinner
+        loading.style.display = 'none';
 
         // Enable "Copy All" button after conversion
         copyAllButton.style.display = 'block';
@@ -70,5 +81,13 @@ document.addEventListener('DOMContentLoaded', function () {
         navigator.clipboard.writeText(allTimesText).then(() => {
             alert('All times copied to clipboard');
         });
+    });
+
+    resetButton.addEventListener('click', function () {
+        document.getElementById('input-time').value = '';
+        timezoneSelect.value = '';
+        timeFormatSelect.value = 'en-US';
+        timezoneList.innerHTML = '';
+        copyAllButton.style.display = 'none';
     });
 });
