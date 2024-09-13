@@ -27,7 +27,8 @@ document.addEventListener('DOMContentLoaded', function () {
             'loading': 'Loading...',
             'copied': 'Copied to clipboard',
             'copied-all': 'All times copied to clipboard',
-            'please-enter': 'Please enter both time and timezone.'
+            'please-enter': 'Please enter both time and timezone.',
+            'convert-button': "Converting"
         },
         'ar': {
             'enter-time': 'أدخل الوقت:',
@@ -42,7 +43,8 @@ document.addEventListener('DOMContentLoaded', function () {
             'loading': 'جار التحميل...',
             'copied': 'تم نسخه إلى الحافظة',
             'copied-all': 'تم نسخ جميع الأوقات إلى الحافظة',
-            'please-enter': 'الرجاء إدخال كل من الوقت والمنطقة الزمنية.'
+            'please-enter': 'الرجاء إدخال كل من الوقت والمنطقة الزمنية.',
+            'convert-button': 'Converting'
         },
         'ko': {
             'enter-time': '시간 입력:',
@@ -57,7 +59,8 @@ document.addEventListener('DOMContentLoaded', function () {
             'loading': '로딩 중...',
             'copied': '클립보드에 복사됨',
             'copied-all': '모든 시간이 클립보드에 복사되었습니다',
-            'please-enter': '시간과 시간대를 모두 입력해 주세요.'
+            'please-enter': '시간과 시간대를 모두 입력해 주세요.',
+            'convert-button': 'Converting'
         },
         'fr': {
             'enter-time': 'Entrer l\'heure:',
@@ -72,7 +75,8 @@ document.addEventListener('DOMContentLoaded', function () {
             'loading': 'Chargement...',
             'copied': 'Copié dans le presse-papiers',
             'copied-all': 'Tous les temps ont été copiés dans le presse-papiers',
-            'please-enter': 'Veuillez entrer à la fois l\'heure et le fuseau horaire.'
+            'please-enter': 'Veuillez entrer à la fois l\'heure et le fuseau horaire.',
+            'convert-button': 'Converting'
         }
     };
 
