@@ -1,3 +1,51 @@
+/* General Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #121212;
+    color: #e0e0e0;
+    margin: 0;
+    padding: 20px;
+}
+
+/* Container Styles */
+.container {
+    max-width: 600px;
+    margin: auto;
+    background: #1e1e1e;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.6);
+}
+
+/* Header Styles */
+h1 {
+    text-align: center;
+    color: #ffffff;
+    margin-bottom: 20px;
+    font-size: 2em;
+}
+
+/* Label Styles */
+label {
+    display: block;
+    margin: 10px 0 5px;
+    color: #b0b0b0;
+    font-weight: bold;
+}
+
+/* Input and Select Styles */
+input, select {
+    width: 100%;
+    padding: 12px;
+    margin: 5px 0 20px;
+    border-radius: 5px;
+    border: 1px solid #333333;
+    background-color: #333333;
+    color: #e0e0e0;
+    font-size: 16px;
+}
+
+/* Button Styles */
 button {
     width: 100%;
     padding: 12px;
@@ -11,6 +59,7 @@ button {
     align-items: center;
     justify-content: center;
     margin-top: 10px;
+    transition: background-color 0.3s ease;
 }
 
 button:hover {
@@ -21,6 +70,46 @@ button i {
     margin-right: 8px;
 }
 
+/* Copy Button Styles */
+.copy-button {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-left: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.copy-button:hover {
+    background-color: #218838;
+}
+
+/* Results Section */
+#results {
+    margin-top: 30px;
+}
+
+/* Timezone List Styles */
+#timezone-list {
+    list-style: none;
+    padding: 0;
+}
+
+#timezone-list li {
+    padding: 15px;
+    background: #2a2a2a;
+    border: 1px solid #444444;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Copy All Button */
 #copy-all-button {
     display: none;
 }
