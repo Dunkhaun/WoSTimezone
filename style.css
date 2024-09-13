@@ -108,8 +108,3 @@ button i {
     justify-content: space-between;
     align-items: center;
 }
-
-/* Copy All Button */
-#copy-all-button {
-    display: none;
-}
