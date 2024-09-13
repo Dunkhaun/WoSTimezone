@@ -26,6 +26,7 @@ document.addEventListener('DOMContentLoaded', function () {
         timezoneSelect.appendChild(option);
     });
 
+    // Conversion and copy logic remains unchanged
     convertButton.addEventListener('click', function () {
         const inputTime = document.getElementById('input-time').value;
         const inputTimezone = timezoneSelect.value;
@@ -69,4 +70,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
         navigator.clipboard.writeText(allTimesText).then(() => {
             alert('All times copied to clipboard');
- 
+        });
+    });
+});
