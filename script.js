@@ -12,12 +12,22 @@ document.addEventListener('DOMContentLoaded', function () {
         { name: 'AEST (Australian Eastern Standard Time)', value: 'Australia/Sydney' },
     ];
 
+    const timezoneSelect = document.getElementById('input-timezone');
     const timezoneList = document.getElementById('timezone-list');
     const convertButton = document.getElementById('convert-button');
+    const copyAllButton = document.getElementById('copy-all-button');
+
+    // Populate timezone dropdown
+    timezones.forEach(timezone => {
+        const option = document.createElement('option');
+        option.value = timezone.value;
+        option.textContent = timezone.name;
+        timezoneSelect.appendChild(option);
+    });
 
     convertButton.addEventListener('click', function () {
         const inputTime = document.getElementById('input-time').value;
-        const inputTimezone = document.getElementById('input-timezone').value;
+        const inputTimezone = timezoneSelect.value;
 
         if (!inputTime || !inputTimezone) {
             alert('Please enter both time and timezone.');
@@ -33,6 +43,9 @@ document.addEventListener('DOMContentLoaded', function () {
             timezoneList.appendChild(listItem);
         });
 
+        // Enable "Copy All" button after conversion
+        copyAllButton.style.display = 'block';
+
         const copyButtons = document.querySelectorAll('.copy-button');
         copyButtons.forEach(button => {
             button.addEventListener('click', function () {
@@ -41,6 +54,20 @@ document.addEventListener('DOMContentLoaded', function () {
                     alert('Copied to clipboard');
                 });
             });
+        });
+    });
+
+    copyAllButton.addEventListener('click', function () {
+        let allTimesText = '';
+        const items = document.querySelectorAll('#timezone-list li');
+
+        items.forEach(item => {
+            const timeText = item.textContent.split('Copy')[0].trim();
+            allTimesText += timeText + '\n';
+        });
+
+        navigator.clipboard.writeText(allTimesText).then(() => {
+            alert('All times copied to clipboard');
         });
     });
 });
