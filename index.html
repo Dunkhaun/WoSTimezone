@@ -4,149 +4,339 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Timezone Converter</title>
-    <style>
-        /* General Styles */
-body {
-    font-family: 'Arial', sans-serif;
-    background: linear-gradient(135deg, #2e3a59, #6f7d92);
-    color: #ffffff;
-    margin: 0;
-    padding: 20px;
-}
+    <style id="theme-style">
+        /* Default General Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #2e3a59, #6f7d92);
+            color: #ffffff;
+            margin: 0;
+            padding: 20px;
+            transition: background 0.3s, color 0.3s;
+        }
 
-/* Container Styles */
-.container {
-    max-width: 600px;
-    margin: auto;
-    background: #1f2a38;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
-}
+        /* Container Styles */
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: #1f2a38;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+            transition: background 0.3s, box-shadow 0.3s;
+        }
 
-/* Header Styles */
-h1 {
-    text-align: center;
-    color: #ffffff;
-    margin-bottom: 20px;
-    font-size: 2.5em;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-}
+        /* Header Styles */
+        h1 {
+            text-align: center;
+            color: #ffffff;
+            margin-bottom: 20px;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
 
-/* Label Styles */
-label {
-    display: block;
-    margin: 10px 0 5px;
-    color: #b0b0b0;
-    font-weight: bold;
-}
+        /* Label Styles */
+        label {
+            display: block;
+            margin: 10px 0 5px;
+            color: #b0b0b0;
+            font-weight: bold;
+        }
 
-/* Input and Select Styles */
-input, select {
-    width: 100%;
-    padding: 12px;
-    margin: 5px 0 20px;
-    border-radius: 5px;
-    border: 1px solid #333333;
-    background-color: #2c3e50;
-    color: #ecf0f1;
-    font-size: 16px;
-}
+        /* Input and Select Styles */
+        input, select {
+            width: calc(100% - 24px);
+            padding: 12px;
+            margin: 5px 0 20px;
+            border-radius: 5px;
+            border: 1px solid #333333;
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
 
-/* Button Styles */
-button {
-    width: 100%;
-    padding: 12px;
-    background-color: #3498db;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 10px;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-}
+        /* Button Container Styles */
+        .button-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
 
-button:hover {
-    background-color: #2980b9;
-    transform: scale(1.05);
-}
+        /* Button Styles */
+        button {
+            flex: 1 1 calc(33.333% - 10px);
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-sizing: border-box;
+        }
 
-button:active {
-    background-color: #1c6ea4;
-}
+        button i {
+            margin-right: 8px;
+        }
 
-button i {
-    margin-right: 8px;
-}
+        button:hover {
+            transform: scale(1.05);
+        }
 
-/* Copy Button Styles */
-.copy-button {
-    background-color: #2ecc71;
-    color: white;
-    border: none;
-    padding: 8px 12px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 14px;
-    margin-left: 10px;
-    transition: background-color 0.3s ease;
-}
+        /* Specific Button Styles */
+        #convert-button {
+            background-color: #3498db;
+            color: white;
+        }
 
-.copy-button:hover {
-    background-color: #27ae60;
-}
+        #convert-button:hover {
+            background-color: #2980b9;
+        }
 
-/* Loading Spinner Styles */
-#loading {
-    text-align: center;
-    font-size: 18px;
-    color: #ffffff;
-    margin-top: 20px;
-    font-weight: bold;
-}
+        #copy-all-button {
+            background-color: #2ecc71;
+            color: white;
+        }
 
-/* Results Section */
-#results {
-    margin-top: 30px;
-}
+        #copy-all-button:hover {
+            background-color: #27ae60;
+        }
 
-/* Timezone List Styles */
-#timezone-list {
-    list-style: none;
-    padding: 0;
-}
+        #reset-button {
+            background-color: #e67e22;
+            color: white;
+        }
 
-#timezone-list li {
-    padding: 15px;
-    background: #34495e;
-    border: 1px solid #1f2a38;
-    border-radius: 5px;
-    margin-bottom: 10px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    color: #ecf0f1;
-    transition: background-color 0.3s ease;
-}
+        #reset-button:hover {
+            background-color: #d35400;
+        }
 
-#timezone-list li:hover {
-    background: #2c3e50;
-}
+        #toggle-theme-button {
+            background-color: #8e44ad;
+            color: white;
+        }
 
-/* Responsive Design */
-@media (max-width: 600px) {
-    .container {
-        padding: 15px;
-    }
+        #toggle-theme-button:hover {
+            background-color: #732d91;
+        }
 
-    button {
-        font-size: 14px;
-    }
-}
+        /* Copy Button Styles */
+        .copy-button {
+            background-color: #2ecc71;
+            color: white;
+            padding: 8px 12px;
+            font-size: 14px;
+            margin-left: 10px;
+        }
+
+        .copy-button:hover {
+            background-color: #27ae60;
+        }
+
+        /* Loading Spinner Styles */
+        #loading {
+            text-align: center;
+            font-size: 18px;
+            color: #ffffff;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+
+        /* Results Section */
+        #results {
+            margin-top: 30px;
+        }
+
+        /* Timezone List Styles */
+        #timezone-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        #timezone-list li {
+            padding: 15px;
+            background: #34495e;
+            border: 1px solid #1f2a38;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #ecf0f1;
+            transition: background-color 0.3s ease;
+        }
+
+        #timezone-list li:hover {
+            background: #2c3e50;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 600px) {
+            .container {
+                padding: 15px;
+            }
+
+            .button-container {
+                flex-direction: column;
+            }
+
+            button {
+                width: 100%;
+                margin-bottom: 10px;
+            }
+
+            button:last-of-type {
+                margin-bottom: 0;
+            }
+        }
+
+        /* Pink Theme Styles */
+        .pink-theme {
+            background: linear-gradient(135deg, #f7a1b6, #f38d9c) !important;
+        }
+
+        .pink-theme .container {
+            background: #f06c9b !important;
+        }
+
+        .pink-theme h1 {
+            color: #ffffff !important;
+        }
+
+        .pink-theme label {
+            color: #f4a6b0 !important;
+        }
+
+        .pink-theme input, .pink-theme select {
+            background-color: #f7a1b6 !important;
+            border: 1px solid #f4a6b0 !important;
+            color: #ffffff !important;
+        }
+
+        .pink-theme button {
+            background-color: #f06c9b !important;
+            color: white !important;
+        }
+
+        .pink-theme button:hover {
+            background-color: #d75184 !important;
+        }
+
+        .pink-theme .copy-button {
+            background-color: #f38d9c !important;
+        }
+
+        .pink-theme .copy-button:hover {
+            background-color: #f06c9b !important;
+        }
+
+        .pink-theme #timezone-list li {
+            background: #f7a1b6 !important;
+        }
+
+        .pink-theme #timezone-list li:hover {
+            background: #f38d9c !important;
+        }
+
+        /* Black Theme Styles */
+        .black-theme {
+            background: linear-gradient(135deg, #000000, #434343) !important;
+        }
+
+        .black-theme .container {
+            background: #1c1c1c !important;
+        }
+
+        .black-theme h1 {
+            color: #ffffff !important;
+        }
+
+        .black-theme label {
+            color: #b0b0b0 !important;
+        }
+
+        .black-theme input, .black-theme select {
+            background-color: #2e2e2e !important;
+            border: 1px solid #444444 !important;
+            color: #e0e0e0 !important;
+        }
+
+        .black-theme button {
+            background-color: #333333 !important;
+            color: #ffffff !important;
+        }
+
+        .black-theme button:hover {
+            background-color: #555555 !important;
+        }
+
+        .black-theme .copy-button {
+            background-color: #444444 !important;
+        }
+
+        .black-theme .copy-button:hover {
+            background-color: #666666 !important;
+        }
+
+        .black-theme #timezone-list li {
+            background: #2e2e2e !important;
+        }
+
+        .black-theme #timezone-list li:hover {
+            background: #444444 !important;
+        }
+
+        /* Pink and Black Theme Styles */
+        .pink-black-theme {
+            background: linear-gradient(135deg, #f7a1b6, #000000) !important;
+        }
+
+        .pink-black-theme .container {
+            background: #1f2a38 !important;
+        }
+
+        .pink-black-theme h1 {
+            color: #ffffff !important;
+        }
+
+        .pink-black-theme label {
+            color: #f4a6b0 !important;
+        }
+
+        .pink-black-theme input, .pink-black-theme select {
+            background-color: #f7a1b6 !important;
+            border: 1px solid #f4a6b0 !important;
+            color: #ffffff !important;
+        }
+
+        .pink-black-theme button {
+            background-color: #f06c9b !important;
+            color: white !important;
+        }
+
+        .pink-black-theme button:hover {
+            background-color: #d75184 !important;
+        }
+
+        .pink-black-theme .copy-button {
+            background-color: #f38d9c !important;
+        }
+
+        .pink-black-theme .copy-button:hover {
+            background-color: #f06c9b !important;
+        }
+
+        .pink-black-theme #timezone-list li {
+            background: #f7a1b6 !important;
+        }
+
+        .pink-black-theme #timezone-list li:hover {
+            background: #f38d9c !important;
+        }
     </style>
 </head>
 <body>
@@ -166,9 +356,12 @@ button i {
             <option value="en-GB">24-hour</option>
         </select>
 
-        <button id="convert-button"><i class="fas fa-sync-alt"></i> Convert</button>
-        <button id="copy-all-button" style="display: none;"><i class="fas fa-copy"></i> Copy All</button>
-        <button id="reset-button"><i class="fas fa-redo"></i> Reset</button>
+        <div class="button-container">
+            <button id="convert-button"><i class="fas fa-sync-alt"></i> Convert</button>
+            <button id="copy-all-button" style="display: none;"><i class="fas fa-copy"></i> Copy All</button>
+            <button id="reset-button"><i class="fas fa-redo"></i> Reset</button>
+            <button id="toggle-theme-button"><i class="fas fa-palette"></i> Toggle Theme</button>
+        </div>
 
         <div id="loading" style="display: none;">Loading...</div>
 
@@ -180,6 +373,115 @@ button i {
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const timezones = [
+                { name: 'UTC (Coordinated Universal Time)', value: 'UTC' },
+                { name: 'GMT (Greenwich Mean Time)', value: 'Europe/London' },
+                { name: 'EST (Eastern Standard Time)', value: 'America/New_York' },
+                { name: 'CST (Central Standard Time)', value: 'America/Chicago' },
+                { name: 'MST (Mountain Standard Time)', value: 'America/Denver' },
+                { name: 'PST (Pacific Standard Time)', value: 'America/Los_Angeles' },
+                { name: 'CET (Central European Time)', value: 'Europe/Berlin' },
+                { name: 'IST (India Standard Time)', value: 'Asia/Kolkata' },
+                { name: 'JST (Japan Standard Time)', value: 'Asia/Tokyo' },
+                { name: 'AEST (Australian Eastern Standard Time)', value: 'Australia/Sydney' },
+                { name: 'SST (Singapore Standard Time)', value: 'Asia/Singapore' }
+            ];
+
+            const timezoneSelect = document.getElementById('input-timezone');
+            const timezoneList = document.getElementById('timezone-list');
+            const convertButton = document.getElementById('convert-button');
+            const copyAllButton = document.getElementById('copy-all-button');
+            const resetButton = document.getElementById('reset-button');
+            const loading = document.getElementById('loading');
+            const timeFormatSelect = document.getElementById('time-format');
+            const toggleThemeButton = document.getElementById('toggle-theme-button');
+
+            // Populate timezone dropdown
+            timezones.forEach(timezone => {
+                const option = document.createElement('option');
+                option.value = timezone.value;
+                option.textContent = timezone.name;
+                timezoneSelect.appendChild(option);
+            });
+
+            convertButton.addEventListener('click', function () {
+                const inputTime = document.getElementById('input-time').value;
+                const inputTimezone = timezoneSelect.value;
+                const timeFormat = timeFormatSelect.value;
+
+                if (!inputTime || !inputTimezone) {
+                    alert('Please enter both time and timezone.');
+                    return;
+                }
+
+                // Show loading spinner
+                loading.style.display = 'block';
+                timezoneList.innerHTML = '';
+
+                timezones.forEach(timezone => {
+                    const convertedTime = new Date(new Date(inputTime).toLocaleString("en-US", { timeZone: timezone.value }));
+                    const options = { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: timeFormat === 'en-US' };
+                    const formattedTime = convertedTime.toLocaleString(timeFormat, options);
+                    const listItem = document.createElement('li');
+                    listItem.innerHTML = `${timezone.name}: ${formattedTime} <button class="copy-button"><i class="fas fa-copy"></i> Copy</button>`;
+                    timezoneList.appendChild(listItem);
+                });
+
+                // Hide loading spinner
+                loading.style.display = 'none';
+
+                // Enable "Copy All" button after conversion
+                copyAllButton.style.display = 'block';
+
+                const copyButtons = document.querySelectorAll('.copy-button');
+                copyButtons.forEach(button => {
+                    button.addEventListener('click', function () {
+                        const timeText = this.parentNode.textContent.split('Copy')[0].trim();
+                        navigator.clipboard.writeText(timeText).then(() => {
+                            alert('Copied to clipboard');
+                        });
+                    });
+                });
+            });
+
+            copyAllButton.addEventListener('click', function () {
+                let allTimesText = '';
+                const items = document.querySelectorAll('#timezone-list li');
+
+                items.forEach(item => {
+                    const timeText = item.textContent.split('Copy')[0].trim();
+                    allTimesText += timeText + '\n';
+                });
+
+                navigator.clipboard.writeText(allTimesText).then(() => {
+                    alert('All times copied to clipboard');
+                });
+            });
+
+            resetButton.addEventListener('click', function () {
+                document.getElementById('input-time').value = '';
+                timezoneSelect.value = '';
+                timeFormatSelect.value = 'en-US';
+                timezoneList.innerHTML = '';
+                copyAllButton.style.display = 'none';
+            });
+
+            toggleThemeButton.addEventListener('click', function () {
+                const currentClass = document.body.className;
+                if (currentClass === 'pink-theme') {
+                    document.body.className = 'black-theme';
+                } else if (currentClass === 'black-theme') {
+                    document.body.className = 'pink-black-theme';
+                } else if (currentClass === 'pink-black-theme') {
+                    document.body.className = '';
+                } else {
+                    document.body.className = 'pink-theme';
+                }
+            });
+        });
+    </script>
 </body>
 </html>
