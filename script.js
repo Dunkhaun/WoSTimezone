@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', function () {
         { name: 'IST (India Standard Time)', value: 'Asia/Kolkata' },
         { name: 'JST (Japan Standard Time)', value: 'Asia/Tokyo' },
         { name: 'AEST (Australian Eastern Standard Time)', value: 'Australia/Sydney' },
+        { name: 'SST (Singapore Standard Time)', value: 'Asia/Singapore' }  // Added SST
     ];
 
     const timezoneSelect = document.getElementById('input-timezone');
@@ -68,6 +69,4 @@ document.addEventListener('DOMContentLoaded', function () {
 
         navigator.clipboard.writeText(allTimesText).then(() => {
             alert('All times copied to clipboard');
-        });
-    });
-});
+ 
