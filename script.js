@@ -1,14 +1,19 @@
 document.addEventListener('DOMContentLoaded', function () {
-    const timezones = Intl.supportedValuesOf('timeZone');
+    const topTimezones = [
+        'UTC', 'America/New_York', 'Europe/London', 'Asia/Tokyo', 
+        'Australia/Sydney', 'Europe/Paris', 'America/Los_Angeles', 
+        'Asia/Dubai', 'America/Sao_Paulo', 'Asia/Shanghai'
+    ];
+    
     const timezoneSelect = document.getElementById('input-timezone');
     const timezoneList = document.getElementById('timezone-list');
     const convertButton = document.getElementById('convert-button');
 
     // Populate timezone dropdown
-    timezones.forEach(timezone => {
+    topTimezones.forEach(timezone => {
         const option = document.createElement('option');
         option.value = timezone;
-        option.textContent = timezone;
+        option.textContent = timezone.replace('_', ' ');
         timezoneSelect.appendChild(option);
     });
 
@@ -23,17 +28,17 @@ document.addEventListener('DOMContentLoaded', function () {
 
         timezoneList.innerHTML = '';
 
-        timezones.forEach(timezone => {
+        topTimezones.forEach(timezone => {
             const convertedTime = new Date(new Date(inputTime).toLocaleString("en-US", { timeZone: timezone }));
             const listItem = document.createElement('li');
-            listItem.innerHTML = `${timezone}: ${convertedTime.toLocaleString()} <button class="copy-button">Copy</button>`;
+            listItem.innerHTML = `<span>${timezone.replace('_', ' ')}: ${convertedTime.toLocaleString()}</span> <button class="copy-button">Copy</button>`;
             timezoneList.appendChild(listItem);
         });
 
         const copyButtons = document.querySelectorAll('.copy-button');
         copyButtons.forEach(button => {
             button.addEventListener('click', function () {
-                const timeText = this.parentNode.textContent.split('Copy')[0];
+                const timeText = this.parentNode.textContent.split('Copy')[0].trim();
                 navigator.clipboard.writeText(timeText).then(() => {
                     alert('Copied to clipboard');
                 });
