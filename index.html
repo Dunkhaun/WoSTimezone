@@ -66,7 +66,7 @@
 
         /* Button Styles */
         button {
-            flex: 1 1 calc(33.333% - 10px);
+            width: calc(100% - 24px); /* Adjust width to match input and select */
             padding: 12px;
             border: none;
             border-radius: 5px;
@@ -100,6 +100,7 @@
         #copy-all-button {
             background-color: #2ecc71;
             color: white;
+            display: none; /* Hidden by default */
         }
 
         #copy-all-button:hover {
@@ -342,37 +343,40 @@
 <body>
     <div class="container">
         <h1>Timezone Converter</h1>
+
+        <!-- Input for entering time -->
         <label for="input-time">Enter time:</label>
         <input type="datetime-local" id="input-time" name="input-time">
 
+        <!-- Dropdown for selecting timezone -->
         <label for="input-timezone">Select your timezone:</label>
         <select id="input-timezone">
             <!-- Options will be populated by JavaScript -->
         </select>
 
+        <!-- Dropdown for selecting time format -->
         <label for="time-format">Time Format:</label>
         <select id="time-format">
             <option value="en-US">12-hour</option>
             <option value="en-GB">24-hour</option>
         </select>
 
-        <label for="language-select">Select Language:</label>
-        <select id="language-select">
-            <option value="en">English</option>
-            <option value="ar">Arabic</option>
-            <option value="ko">Korean</option>
-            <option value="fr">French</option>
-        </select>
-
+        <!-- Container for buttons -->
         <div class="button-container">
+            <!-- Convert button -->
             <button id="convert-button"><i class="fas fa-sync-alt"></i> Convert</button>
+            <!-- Copy All button, initially hidden -->
             <button id="copy-all-button" style="display: none;"><i class="fas fa-copy"></i> Copy All</button>
+            <!-- Reset button -->
             <button id="reset-button"><i class="fas fa-redo"></i> Reset</button>
+            <!-- Toggle Theme button -->
             <button id="toggle-theme-button"><i class="fas fa-palette"></i> Toggle Theme</button>
         </div>
 
+        <!-- Loading indicator -->
         <div id="loading" style="display: none;">Loading...</div>
 
+        <!-- Results section -->
         <div id="results">
             <h2>Converted Times:</h2>
             <ul id="timezone-list">
@@ -381,9 +385,11 @@
         </div>
     </div>
 
+    <!-- Font Awesome for icons -->
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
+            // Array of timezones
             const timezones = [
                 { name: 'UTC (Coordinated Universal Time)', value: 'UTC' },
                 { name: 'GMT (Greenwich Mean Time)', value: 'Europe/London' },
@@ -398,73 +404,7 @@
                 { name: 'SST (Singapore Standard Time)', value: 'Asia/Singapore' }
             ];
 
-            const translations = {
-                'en': {
-                    'enter-time': 'Enter time:',
-                    'select-timezone': 'Select your timezone:',
-                    'time-format': 'Time Format:',
-                    'select-language': 'Select Language:',
-                    'converted-times': 'Converted Times:',
-                    'copy': 'Copy',
-                    'copy-all': 'Copy All',
-                    'reset': 'Reset',
-                    'toggle-theme': 'Toggle Theme',
-                    'loading': 'Loading...',
-                    'copied': 'Copied to clipboard',
-                    'copied-all': 'All times copied to clipboard',
-                    'please-enter': 'Please enter both time and timezone.',
-                    'convert-button': 'Converting'
-                },
-                'ar': {
-                    'enter-time': 'أدخل الوقت:',
-                    'select-timezone': 'حدد منطقتك الزمنية:',
-                    'time-format': 'تنسيق الوقت:',
-                    'select-language': 'اختر اللغة:',
-                    'converted-times': 'الأوقات المحولة:',
-                    'copy': 'نسخ',
-                    'copy-all': 'نسخ الكل',
-                    'reset': 'إعادة تعيين',
-                    'toggle-theme': 'تبديل السمة',
-                    'loading': 'جار التحميل...',
-                    'copied': 'تم نسخه إلى الحافظة',
-                    'copied-all': 'تم نسخ جميع الأوقات إلى الحافظة',
-                    'please-enter': 'الرجاء إدخال كل من الوقت والمنطقة الزمنية.',
-                    'convert-button': 'Converting'
-                },
-                'ko': {
-                    'enter-time': '시간 입력:',
-                    'select-timezone': '시간대 선택:',
-                    'time-format': '시간 형식:',
-                    'select-language': '언어 선택:',
-                    'converted-times': '변환된 시간:',
-                    'copy': '복사',
-                    'copy-all': '모두 복사',
-                    'reset': '초기화',
-                    'toggle-theme': '테마 변경',
-                    'loading': '로딩 중...',
-                    'copied': '클립보드에 복사됨',
-                    'copied-all': '모든 시간이 클립보드에 복사되었습니다',
-                    'please-enter': '시간과 시간대를 모두 입력해 주세요.',
-                    'convert-button': 'Converting'
-                },
-                'fr': {
-                    'enter-time': 'Entrer l\'heure:',
-                    'select-timezone': 'Sélectionnez votre fuseau horaire:',
-                    'time-format': 'Format de l\'heure:',
-                    'select-language': 'Choisir la langue:',
-                    'converted-times': 'Heures Converties:',
-                    'copy': 'Copier',
-                    'copy-all': 'Tout Copier',
-                    'reset': 'Réinitialiser',
-                    'toggle-theme': 'Changer de thème',
-                    'loading': 'Chargement...',
-                    'copied': 'Copié dans le presse-papiers',
-                    'copied-all': 'Tous les temps ont été copiés dans le presse-papiers',
-                    'please-enter': 'Veuillez entrer à la fois l\'heure et le fuseau horaire.',
-                    'convert-button': 'Converting'
-                }
-            };
-
+            // Elements
             const timezoneSelect = document.getElementById('input-timezone');
             const timezoneList = document.getElementById('timezone-list');
             const convertButton = document.getElementById('convert-button');
@@ -473,7 +413,6 @@
             const loading = document.getElementById('loading');
             const timeFormatSelect = document.getElementById('time-format');
             const toggleThemeButton = document.getElementById('toggle-theme-button');
-            const languageSelect = document.getElementById('language-select');
 
             // Populate timezone dropdown
             timezones.forEach(timezone => {
@@ -483,36 +422,14 @@
                 timezoneSelect.appendChild(option);
             });
 
-            // Translate UI
-            function translateUI(language) {
-                document.querySelector('label[for="input-time"]').textContent = translations[language]['enter-time'];
-                document.querySelector('label[for="input-timezone"]').textContent = translations[language]['select-timezone'];
-                document.querySelector('label[for="time-format"]').textContent = translations[language]['time-format'];
-                document.querySelector('label[for="language-select"]').textContent = translations[language]['select-language'];
-                document.querySelector('#results h2').textContent = translations[language]['converted-times'];
-                convertButton.innerHTML = `<i class="fas fa-sync-alt"></i> ${translations[language]['convert']}`;
-                copyAllButton.innerHTML = `<i class="fas fa-copy"></i> ${translations[language]['copy-all']}`;
-                resetButton.innerHTML = `<i class="fas fa-redo"></i> ${translations[language]['reset']}`;
-                toggleThemeButton.innerHTML = `<i class="fas fa-palette"></i> ${translations[language]['toggle-theme']}`;
-                loading.textContent = translations[language]['loading'];
-            }
-
-            // Set default language
-            let currentLanguage = 'en';
-            translateUI(currentLanguage);
-
-            languageSelect.addEventListener('change', function () {
-                currentLanguage = this.value;
-                translateUI(currentLanguage);
-            });
-
+            // Convert button click event
             convertButton.addEventListener('click', function () {
                 const inputTime = document.getElementById('input-time').value;
                 const inputTimezone = timezoneSelect.value;
                 const timeFormat = timeFormatSelect.value;
 
                 if (!inputTime || !inputTimezone) {
-                    alert(translations[currentLanguage]['please-enter']);
+                    alert('Please enter both time and timezone.');
                     return;
                 }
 
@@ -525,67 +442,63 @@
                     const options = { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: timeFormat === 'en-US' };
                     const formattedTime = convertedTime.toLocaleString(timeFormat, options);
                     const listItem = document.createElement('li');
-                    listItem.innerHTML = `${timezone.name}: ${formattedTime} <button class="copy-button"><i class="fas fa-copy"></i> ${translations[currentLanguage]['copy']}</button>`;
+                    listItem.innerHTML = `${timezone.name}: ${formattedTime} <button class="copy-button"><i class="fas fa-copy"></i> Copy</button>`;
                     timezoneList.appendChild(listItem);
                 });
 
-                // Hide loading spinner
+                // Hide loading spinner and show "Copy All" button
                 loading.style.display = 'none';
-
-                // Enable "Copy All" button after conversion
                 copyAllButton.style.display = 'block';
 
+                // Add click event to each copy button
                 const copyButtons = document.querySelectorAll('.copy-button');
                 copyButtons.forEach(button => {
                     button.addEventListener('click', function () {
-                        const timeText = this.parentNode.textContent.replace(translations[currentLanguage]['copy'], '').trim();
+                        const timeText = this.parentNode.textContent.split('Copy')[0].trim();
                         navigator.clipboard.writeText(timeText).then(() => {
-                            alert(translations[currentLanguage]['copied']);
+                            alert('Copied to clipboard');
                         });
-                    });
-                });
-
-                // Copy all times functionality
-                copyAllButton.addEventListener('click', function () {
-                    let allTimes = '';
-                    timezoneList.querySelectorAll('li').forEach(li => {
-                        allTimes += li.textContent.replace(translations[currentLanguage]['copy'], '').trim() + '\n';
-                    });
-                    navigator.clipboard.writeText(allTimes).then(() => {
-                        alert(translations[currentLanguage]['copied-all']);
                     });
                 });
             });
 
+            // Copy All button click event
+            copyAllButton.addEventListener('click', function () {
+                let allTimesText = '';
+                const items = document.querySelectorAll('#timezone-list li');
+
+                items.forEach(item => {
+                    const timeText = item.textContent.split('Copy')[0].trim();
+                    allTimesText += timeText + '\n';
+                });
+
+                navigator.clipboard.writeText(allTimesText).then(() => {
+                    alert('All times copied to clipboard');
+                });
+            });
+
+            // Reset button click event
             resetButton.addEventListener('click', function () {
                 document.getElementById('input-time').value = '';
                 timezoneSelect.value = '';
+                timeFormatSelect.value = 'en-US';
                 timezoneList.innerHTML = '';
                 copyAllButton.style.display = 'none';
             });
 
+            // Toggle Theme button click event
             toggleThemeButton.addEventListener('click', function () {
-                document.body.classList.toggle('pink-theme');
-                document.body.classList.toggle('black-theme');
-                document.body.classList.toggle('pink-black-theme');
+                const currentClass = document.body.className;
+                if (currentClass === 'pink-theme') {
+                    document.body.className = 'black-theme';
+                } else if (currentClass === 'black-theme') {
+                    document.body.className = 'pink-black-theme';
+                } else if (currentClass === 'pink-black-theme') {
+                    document.body.className = '';
+                } else {
+                    document.body.className = 'pink-theme';
+                }
             });
-
-            // Populate local timezone if available
-            function setLocalTimezone() {
-                if (Intl.DateTimeFormat().resolvedOptions().timeZone) {
-                    timezoneSelect.value = Intl.DateTimeFormat().resolvedOptions().timeZone;
-                }
-            }
-            setLocalTimezone();
-
-            // Update theme based on user preference
-            function updateTheme() {
-                const currentTheme = localStorage.getItem('theme');
-                if (currentTheme) {
-                    document.body.classList.add(currentTheme);
-                }
-            }
-            updateTheme();
         });
     </script>
 </body>
