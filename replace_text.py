@@ -21,7 +21,7 @@ def replace_text_in_file(file_path, old_text, new_text):
 
 def main():
     # Define the path to your HTML file
-    html_file_path = 'WoSTimezone/index.html'  # Update this path
+    html_file_path = 'path/to/your/index.html'  # Update this path
 
     # Define the text to replace
     old_text = 'Undefined'
